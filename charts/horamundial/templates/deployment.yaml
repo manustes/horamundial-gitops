@@ -35,12 +35,12 @@ spec:
           livenessProbe:
             httpGet:
               path: /ping
-              port: http
+              port: {{ .Values.service.targetPort }}
             initialDelaySeconds: 30
             periodSeconds: 10
           readinessProbe:
             httpGet:
               path: /ping
-              port: http
+              port: {{ .Values.service.targetPort }}
             initialDelaySeconds: 30
             periodSeconds: 10
