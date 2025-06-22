@@ -1,15 +1,12 @@
 replicaCount: 1
-
 image:
   repository: mnustes/horamundial
   pullPolicy: IfNotPresent
-  tag: "latest"
-
+  tag: "d760dcea258a0ddce5674af0912624c02a18299f"
 service:
   type: LoadBalancer
   port: 80
   targetPort: 8080
-
 resources:
   limits:
     cpu: 500m
