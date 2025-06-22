@@ -17,4 +17,3 @@ spec:
   selector:
     app.kubernetes.io/name: {{ .Release.Name }}
     app.kubernetes.io/instance: {{ .Release.Name }}
-    {{- include "horamundial.selectorLabels" . | nindent 4 }}
