@@ -1,0 +1,38 @@
+name: CD
+
+on:
+  repository_dispatch:
+    types: [app-update]
+  workflow_dispatch:
+    inputs:
+      sha:
+        description: 'Commit SHA'
+        required: true
+
+jobs:
+  update-deployment:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      
+    - name: Set up Helm
+      uses: azure/setup-helm@v3
+      with:
+        version: 'v3.10.0'
+        
+    - name: Update image tag
+      run: |
+        # Obtener el SHA del commit
+        SHA="${{ github.event.client_payload.sha || github.event.inputs.sha || github.sha }}"
+        
+        # Actualizar el tag en el chart
+        yq e ".image.tag = \"$SHA\"" -i ./charts/horamundial/values.yaml
+        
+    - name: Commit and push changes
+      run: |
+        git config --global user.name 'GitHub Actions'
+        git config --global user.email 'actions@github.com'
+        git add .
+        git diff --quiet && git diff --staged --quiet || \
+          (git commit -m "chore: update image to ${{ github.event.client_payload.sha || github.event.inputs.sha || github.sha }} [skip ci]" && \
+           git push origin main)

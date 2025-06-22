@@ -1,0 +1,19 @@
+replicaCount: 1
+
+image:
+  repository: mnustes/horamundial
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 8080
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 200m
+    memory: 256Mi
