@@ -1,9 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "horamundial.fullname" . }}
+  name: {{ .Release.Name }}
   labels:
-    {{- include "horamundial.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ .Release.Name }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -12,4 +15,6 @@ spec:
       protocol: TCP
       name: http
   selector:
+    app.kubernetes.io/name: {{ .Release.Name }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
     {{- include "horamundial.selectorLabels" . | nindent 4 }}
