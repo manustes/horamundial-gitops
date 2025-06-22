@@ -2,7 +2,7 @@ replicaCount: 1
 image:
   repository: mnustes/horamundial
   pullPolicy: IfNotPresent
-  tag: "19f8f5261a55962c8eca846161b3aeaee723045a"
+  tag: ""
 service:
   type: LoadBalancer
   port: 80
