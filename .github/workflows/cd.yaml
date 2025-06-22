@@ -35,4 +35,4 @@ jobs:
         git add .
         git diff --quiet && git diff --staged --quiet || \
           (git commit -m "chore: update image to ${{ github.event.client_payload.sha || github.event.inputs.sha || github.sha }} [skip ci]" && \
-           git push origin main)
+           git push origin master)
